@@ -639,9 +639,10 @@ const RSVP_STORE = {
           },
           body: JSON.stringify(row)
         });
-        if (!res.ok) throw new Error("HTTP " + res.status);
-      } catch (_) {
-        showError("We couldn't send your RSVP just now. Please check your connection and try again.");
+        if (!res.ok) throw new Error(String(res.status));
+      } catch (ex) {
+        const code = /^\d+$/.test(ex.message) ? ex.message : "network";
+        showError("We couldn't send your RSVP just now. Please try again in a moment. (Error: " + code + ")");
         return;
       } finally {
         submit.disabled = false; submit.textContent = "Submit RSVP";
