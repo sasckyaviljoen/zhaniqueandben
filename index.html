@@ -631,17 +631,14 @@ const RSVP_STORE = {
       try {
         const res = await fetch(RSVP_STORE.url + "/rest/v1/" + RSVP_STORE.table, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            apikey: RSVP_STORE.anonKey,
-            Authorization: "Bearer " + RSVP_STORE.anonKey,
-            Prefer: "return=minimal"
-          },
+          headers: RSVP_STORE.anonKey.startsWith("sb_")
+            ? { "Content-Type": "application/json", apikey: RSVP_STORE.anonKey }
+            : { "Content-Type": "application/json", apikey: RSVP_STORE.anonKey, Authorization: "Bearer " + RSVP_STORE.anonKey },
           body: JSON.stringify(row)
         });
         if (!res.ok) throw new Error(String(res.status));
       } catch (ex) {
-        const code = /^\d+$/.test(ex.message) ? ex.message : "network";
+        const code = /^\d+$/.test(ex.message) ? ex.message : "network, " + new URL(RSVP_STORE.url).hostname.split(".")[0];
         showError("We couldn't send your RSVP just now. Please try again in a moment. (Error: " + code + ")");
         return;
       } finally {
