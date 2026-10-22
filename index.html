@@ -119,7 +119,10 @@ nav.top a:hover { color: var(--accent); }
   font-family: var(--font-display); font-size: var(--step-1); letter-spacing: 0.04em;
 }
 .date-line .dot { width: 6px; height: 6px; transform: rotate(45deg); background: var(--brass); }
-.place { color: var(--muted); font-size: 0.95rem; letter-spacing: 0.08em; }
+.when-where { display: grid; gap: 0.35rem; color: var(--muted); font-size: 1rem; letter-spacing: 0.04em; }
+.when-where p { display: flex; align-items: center; justify-content: center; gap: 0.6rem; flex-wrap: wrap; }
+.when-where b { font-weight: 500; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brass); }
+.when-where .dot { width: 5px; height: 5px; transform: rotate(45deg); background: var(--brass); }
 
 .countdown {
   display: grid; grid-template-columns: repeat(4, minmax(0, 4.75rem)); gap: 0.6rem; margin-top: 0.8rem;
@@ -146,12 +149,14 @@ section.block .wrap { padding-block: 5rem; }
 .flourish { width: 120px; height: 14px; color: var(--brass); }
 .lede { max-width: 38rem; margin: 0 auto; text-align: center; font-size: 1.1rem; color: var(--muted); }
 .lede + .lede { margin-top: 1rem; }
+.story-text { max-width: 40rem; margin: 0 auto; display: grid; gap: 1.25rem; font-size: 1.05rem; color: var(--muted); }
+.story-text .story-close { font-family: var(--font-display); font-style: italic; font-size: var(--step-1); line-height: 1.5; color: var(--ink); text-align: center; padding-top: 0.75rem; text-wrap: balance; }
 
 
 /* Venue */
 .venue { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
 .venue-art {
-  aspect-ratio: 4 / 5; max-width: 100%;
+  aspect-ratio: 4 / 3; max-width: 100%;
   background: var(--panel); color: var(--panel-leaf);
   display: grid; place-items: center; position: relative; overflow: hidden;
 }
@@ -161,6 +166,18 @@ section.block .wrap { padding-block: 5rem; }
 .venue-art .sign .script { font-family: var(--font-script); font-size: clamp(3rem, 8vw, 4.5rem); line-height: 1; color: var(--panel-ink); }
 .venue-art .sign .small { font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--panel-leaf); }
 .venue-copy { display: grid; gap: 1.25rem; min-width: 0; }
+.venue-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.venue-art.has-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0, 0, 0, .55), rgba(0, 0, 0, .1) 55%); }
+.venue-art.has-photo { place-items: end center; }
+.venue-art.has-photo .sign { z-index: 1; padding-bottom: 1.75rem; }
+.stops { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; margin-bottom: clamp(3rem, 7vw, 4.5rem); }
+.stop { background: var(--surface); border: 1px solid var(--line); padding: clamp(1.5rem, 4vw, 2.5rem); display: grid; gap: 0.5rem; justify-items: center; text-align: center; min-width: 0; }
+.stop-time { font-family: var(--font-display); font-size: var(--step-3); line-height: 1; color: var(--accent); }
+.stop-kind { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--brass); }
+.stop h3 { font-size: var(--step-2); margin-top: 0.5rem; }
+.stop-sub { font-family: var(--font-display); font-style: italic; color: var(--muted); }
+.stop p:not([class]) { color: var(--muted); font-size: 0.95rem; }
+.stop .btn { margin-top: 0.75rem; }
 .venue-copy h3 { font-size: var(--step-2); }
 .facts { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem; }
 .facts li { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--line); }
@@ -293,6 +310,7 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
 
 @media (max-width: 760px) {
   .venue { grid-template-columns: minmax(0, 1fr); }
+  .stops { grid-template-columns: minmax(0, 1fr); }
   .venue-art { aspect-ratio: 16 / 10; }
   .notes { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
   section.block .wrap { padding-block: 3.75rem; }
@@ -332,10 +350,11 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
     <p class="invite">invite you to celebrate their marriage</p>
     <div class="date-line">
       <span data-date-long>Saturday, 16 January 2027</span>
-      <span class="dot" aria-hidden="true"></span>
-      <span data-time>Four o'clock in the afternoon</span>
     </div>
-    <p class="place">Chocolat Bistro &middot; Durbanville &middot; Cape Town</p>
+    <div class="when-where">
+      <p><b>Ceremony</b> 4pm <span class="dot" aria-hidden="true"></span> NG Kerk Durbanville</p>
+      <p><b>Reception</b> 6pm <span class="dot" aria-hidden="true"></span> Chocolat Bistro</p>
+    </div>
     <div class="countdown" aria-label="Time until the wedding" id="countdown">
       <div><b id="cd-d">0</b><span>Days</span></div>
       <div><b id="cd-h">0</b><span>Hours</span></div>
@@ -360,11 +379,15 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
   <div class="wrap">
     <div class="head">
       <p class="eyebrow">Our story</p>
-      <h2>A love story, <em>with a little chocolate</em></h2>
+      <h2>It all began <em>at the gym</em></h2>
       <svg class="flourish" viewBox="0 0 120 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 7 H48 M72 7 H120"/><path d="M60 1 L66 7 L60 13 L54 7 Z"/></svg>
     </div>
-    <p class="lede">We met over coffee and stayed for dessert. Years of Sunday brunches, long drives through the Durbanville hills and far too many shared slices of chocolate cake later, we're making it official.</p>
-    <p class="lede">We've chosen a small, cosy bistro for a small, cosy wedding: a handful of the people we love most, good food, good wine from the valley and a fireplace to gather around. We would love for you to be there.</p>
+    <div class="story-text">
+      <p>Some love stories begin with a chance meeting, and ours began somewhere between the weights and workouts of a gym. It was a place where we both showed up to work hard, push our limits, and become better versions of ourselves. Little did we know that one ordinary day would lead to something extraordinary. Ben may have been shaking nervously when he first approached Zhanique, but what followed was worth every nervous step. Beyond the workouts, we discovered something special: a shared mindset, a determination to work hard for the things we wanted, and a belief that the best things in life are worth the effort.</p>
+      <p>As we got to know each other, our individual journeys began to merge into something greater. We found joy in the little things, from our dates and adventures to the quiet moments spent together. We learned that love is not simply about finding someone who makes you happy, but finding someone who understands your drive, supports your ambitions, and chooses to stand beside you through every challenge. We had each been working towards our own goals, but somewhere along the way, our dreams began to align. What was once about becoming the best versions of ourselves individually became about building something bigger together.</p>
+      <p>Now, as we prepare to begin this next chapter, we do so with the same determination that brought us together, only with a much greater purpose. We are no longer working towards our dreams separately; we are building a future, a home, and a life that reflects everything we believe in. There will be new goals to chase, adventures to share, challenges to overcome, and countless memories still waiting to be made. And through it all, we will keep doing what brought us here in the first place: showing up, putting in the work, and choosing each other every single day.</p>
+      <p class="story-close">We may have met while working on ourselves, but we fell in love with the possibility of everything we could become together.</p>
+    </div>
   </div>
 </section>
 
@@ -373,12 +396,31 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
 <section class="block" id="venue">
   <div class="wrap">
     <div class="head">
-      <p class="eyebrow">The venue</p>
-      <h2>Chocolat Bistro, <em>Durbanville</em></h2>
+      <p class="eyebrow">Where &amp; when</p>
+      <h2>Ceremony <em>&amp;</em> reception</h2>
+    </div>
+    <div class="stops">
+      <article class="stop">
+        <p class="stop-time">4pm</p>
+        <p class="stop-kind">Ceremony</p>
+        <h3>NG Kerk Durbanville</h3>
+        <p class="stop-sub">Moedergemeente (Dutch Reformed Church)</p>
+        <p>Church St &amp; Weyers Ave, Durbanville, Cape Town, 7551</p>
+        <a class="btn ghost" href="https://www.google.com/maps/search/?api=1&amp;query=NG+Kerk+Durbanville+Moedergemeente" target="_blank" rel="noopener">Directions</a>
+      </article>
+      <article class="stop">
+        <p class="stop-time">6pm</p>
+        <p class="stop-kind">Reception</p>
+        <h3>Chocolat Bistro</h3>
+        <p class="stop-sub">The Birdcage</p>
+        <p>Durbanville, Cape Town. Street parking around the bistro.</p>
+        <a class="btn ghost" href="https://www.google.com/maps/search/?api=1&amp;query=Chocolat+Bistro+Durbanville" target="_blank" rel="noopener">Directions</a>
+      </article>
     </div>
     <div class="venue">
-      <div class="venue-art" aria-hidden="true">
-        <div class="sign">
+      <div class="venue-art">
+        <img class="venue-photo" src="https://i2.wp.com/www.capetourism.com/wp-content/uploads/2023/09/ChocolatBistro-1024x661.jpg?ssl=1" alt="Chocolat Bistro, Durbanville" loading="lazy" referrerpolicy="no-referrer" onload="this.parentElement.classList.add('has-photo')" onerror="this.remove()">
+        <div class="sign" aria-hidden="true">
           <span class="small">Bistro</span>
           <span class="script">Chocolat</span>
           <span class="small">Durbanville</span>
@@ -386,15 +428,7 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
       </div>
       <div class="venue-copy">
         <h3>A cosy bistro in the heart of the wine valley</h3>
-        <p>Chocolat Bistro is a charming spot in Durbanville, about 30 minutes from central Cape Town. We will celebrate in the Birdcage, its private room with its own bar and fireplace, and spill out into the garden for drinks and photos.</p>
-        <ul class="facts">
-          <li><span class="k">Venue</span><span>Chocolat Bistro, Durbanville, Cape Town</span></li>
-          <li><span class="k">Room</span><span>The Birdcage, with ceremony and reception in one place</span></li>
-          <li><span class="k">Parking</span><span>Street parking around the bistro</span></li>
-        </ul>
-        <div class="actions">
-          <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Chocolat+Bistro+Durbanville" target="_blank" rel="noopener">Open in Maps</a>
-        </div>
+        <p>After the ceremony we head to Chocolat Bistro, a charming spot in Durbanville about 30 minutes from central Cape Town. We'll celebrate in the Birdcage, its private room with its own bar and fireplace, with the garden for drinks and photos.</p>
       </div>
     </div>
   </div>
@@ -426,7 +460,7 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
     <div class="notes">
       <div class="note">
         <h3>Please don't be late</h3>
-        <p>The ceremony starts at 4pm sharp. Please arrive by 3:30pm so you're settled and seated before we begin.</p>
+        <p>The ceremony starts at 4pm sharp at NG Kerk Durbanville. Please arrive by 3:30pm so you're settled and seated before we begin.</p>
       </div>
       <div class="note">
         <h3>No phones during the ceremony</h3>
@@ -438,7 +472,7 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
       </div>
       <div class="note">
         <h3>Food &amp; dietary needs</h3>
-        <p>Dinner is served by the bistro kitchen. Tell us about allergies or dietary needs in your RSVP and we'll make sure you're looked after.</p>
+        <p>Dinner is served at Chocolat Bistro from 6pm. If you have allergies or dietary needs, please let us know directly and we'll make sure you're looked after.</p>
       </div>
       <div class="note">
         <h3>Staying over</h3>
@@ -474,14 +508,6 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
           <label for="rsvp-no">Regretfully declines</label>
         </div>
       </fieldset>
-      <div class="field" id="attending-fields">
-        <label for="rsvp-song">A song for the dance floor</label>
-        <input id="rsvp-song" name="song" type="text" maxlength="200" placeholder="Optional">
-      </div>
-      <div class="field" id="diet-field">
-        <label for="rsvp-diet">Dietary needs or allergies</label>
-        <input id="rsvp-diet" name="diet" type="text" maxlength="500" placeholder="e.g. vegetarian, nut allergy">
-      </div>
       <div class="field">
         <label for="rsvp-note">A note for the couple</label>
         <textarea id="rsvp-note" name="note" maxlength="2000" placeholder="Optional"></textarea>
@@ -517,7 +543,6 @@ const WEDDING = {
   partnerOne: "Zhanique",
   partnerTwo: "Ben",
   date: "2027-01-16T16:00:00+02:00", // ceremony time, South African time (SAST, UTC+2)
-  timeWords: "Four o'clock in the afternoon",
   rsvpBy: "30 November"
 };
 
@@ -539,7 +564,6 @@ const RSVP_STORE = {
     el.append(WEDDING.partnerOne, Object.assign(document.createElement("span"), { className: "amp", textContent: "&" }), WEDDING.partnerTwo);
   });
   document.querySelectorAll("[data-date-long]").forEach(el => el.textContent = longDate);
-  document.querySelectorAll("[data-time]").forEach(el => el.textContent = WEDDING.timeWords);
   document.querySelectorAll("[data-rsvp-by]").forEach(el => el.textContent = WEDDING.rsvpBy);
   document.title = WEDDING.partnerOne + " & " + WEDDING.partnerTwo + "'s Wedding";
 
@@ -602,13 +626,7 @@ const RSVP_STORE = {
   const result = document.getElementById("rsvp-result");
   const err = document.getElementById("rsvp-error");
   const submit = document.getElementById("rsvp-submit");
-  const attendingFields = [document.getElementById("attending-fields"), document.getElementById("diet-field")];
   const showError = msg => { err.textContent = msg; err.hidden = false; };
-
-  form.addEventListener("change", () => {
-    const yes = form.attending.value === "yes";
-    attendingFields.forEach(el => el.hidden = !yes);
-  });
 
   form.addEventListener("submit", async e => {
     e.preventDefault();
@@ -619,8 +637,6 @@ const RSVP_STORE = {
     const row = {
       name,
       attending: yes,
-      dietary: yes ? form.diet.value.trim() || null : null,
-      song: yes ? form.song.value.trim() || null : null,
       note: form.note.value.trim() || null
     };
 
