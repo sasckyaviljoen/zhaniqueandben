@@ -149,6 +149,14 @@ section.block .wrap { padding-block: 5rem; }
 .flourish { width: 120px; height: 14px; color: var(--brass); }
 .lede { max-width: 38rem; margin: 0 auto; text-align: center; font-size: 1.1rem; color: var(--muted); }
 .lede + .lede { margin-top: 1rem; }
+.couple-photo {
+  position: relative; width: min(calc(100% - 24px), 24rem); aspect-ratio: 4 / 5; margin: 0 auto 3rem;
+  background: var(--panel); display: grid; place-items: center; overflow: hidden;
+  box-shadow: 0 0 0 1px var(--line), 0 0 0 10px var(--surface), 0 0 0 11px var(--line);
+}
+.couple-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.couple-photo .monogram { font-family: var(--font-script); font-size: clamp(3.5rem, 14vw, 5rem); color: var(--panel-ink); opacity: .85; }
+.couple-photo.has-photo .monogram { display: none; }
 .story-text { max-width: 40rem; margin: 0 auto; display: grid; gap: 1.25rem; font-size: 1.05rem; color: var(--muted); }
 .story-text .story-close { font-family: var(--font-display); font-style: italic; font-size: var(--step-1); line-height: 1.5; color: var(--ink); text-align: center; padding-top: 0.75rem; text-wrap: balance; }
 
@@ -382,6 +390,10 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
       <h2>It all began <em>at the gym</em></h2>
       <svg class="flourish" viewBox="0 0 120 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 7 H48 M72 7 H120"/><path d="M60 1 L66 7 L60 13 L54 7 Z"/></svg>
     </div>
+    <figure class="couple-photo">
+      <img src="couple.jpg" alt="Zhanique and Ben" loading="lazy" onload="this.parentElement.classList.add('has-photo')" onerror="this.remove()">
+      <span class="monogram" aria-hidden="true" data-initials>Z&amp;B</span>
+    </figure>
     <div class="story-text">
       <p>Some love stories begin with a chance meeting, and ours began somewhere between the weights and workouts of a gym. It was a place where we both showed up to work hard, push our limits, and become better versions of ourselves. Little did we know that one ordinary day would lead to something extraordinary. Ben may have been shaking nervously when he first approached Zhanique, but what followed was worth every nervous step. Beyond the workouts, we discovered something special: a shared mindset, a determination to work hard for the things we wanted, and a belief that the best things in life are worth the effort.</p>
       <p>As we got to know each other, our individual journeys began to merge into something greater. We found joy in the little things, from our dates and adventures to the quiet moments spent together. We learned that love is not simply about finding someone who makes you happy, but finding someone who understands your drive, supports your ambitions, and chooses to stand beside you through every challenge. We had each been working towards our own goals, but somewhere along the way, our dreams began to align. What was once about becoming the best versions of ourselves individually became about building something bigger together.</p>
