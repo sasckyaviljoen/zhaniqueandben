@@ -236,6 +236,7 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
   display: grid; place-items: center; align-content: center; gap: 2rem; text-align: center;
   padding: max(24px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(24px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
   transition: opacity .9s ease, transform .9s ease, visibility 0s .9s;
+  cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
 }
 #intro.leaving { opacity: 0; transform: scale(1.06); visibility: hidden; }
 #intro .intro-top { display: grid; gap: .5rem; }
@@ -247,7 +248,7 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
   border: 0; padding: 0; background: none; cursor: pointer; perspective: 1400px;
   animation: float 4s ease-in-out infinite; transition: transform .6s ease;
 }
-.env:hover { transform: translateY(-4px) rotate(-1deg); }
+@media (hover: hover) { .env:hover { transform: translateY(-4px) rotate(-1deg); } }
 #intro.open .env { animation: none; transform: translateY(18%); transition: transform 1.2s cubic-bezier(.2, .7, .2, 1) .5s; }
 .env > * { position: absolute; }
 .env-back { inset: 0; background: var(--env); border-radius: 4px; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .55); }
@@ -321,7 +322,7 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
     <span class="env-flap"></span>
     <span class="env-seal" data-initials>Z&amp;B</span>
   </button>
-  <p class="intro-hint">Tap the envelope to open</p>
+  <p class="intro-hint">Tap to open</p>
 </div>
 
 <header class="hero" id="top">
@@ -497,9 +498,7 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
     <div class="result" id="rsvp-result" hidden>
       <h3 id="result-title">Thank you!</h3>
       <p id="result-text">Your RSVP has been received.</p>
-      <div class="actions">
-        <button class="btn ghost" type="button" id="again-btn">Send another RSVP</button>
-      </div>
+      <p class="hint">Need to change your reply? Please let Zhanique or Ben know directly.</p>
     </div>
   </div>
 </section>
@@ -562,8 +561,7 @@ const RSVP_STORE = {
     finishIntro();
   } else {
     intro.hidden = false; root.classList.add("intro-lock");
-    const openBtn = document.getElementById("env-open");
-    openBtn.addEventListener("click", () => {
+    intro.addEventListener("click", () => {
       if (intro.classList.contains("open")) return;
       intro.classList.add("open");
       try { sessionStorage.setItem("intro-seen", "1"); } catch (_) {}
@@ -647,14 +645,22 @@ const RSVP_STORE = {
       }
     }
 
-    document.getElementById("result-title").textContent = yes ? "Thank you! See you there." : "Thank you. You'll be missed.";
-    document.getElementById("result-text").textContent = "Your RSVP has been received, " + name + ".";
-    form.reset(); attendingFields.forEach(el => el.hidden = false);
-    form.hidden = true; result.hidden = false;
+    try { localStorage.setItem("rsvp-sent", JSON.stringify({ name, yes })); } catch (_) {}
+    showReceived(name, yes, false);
     result.scrollIntoView({ block: "center" });
   });
 
-  document.getElementById("again-btn").addEventListener("click", () => { result.hidden = true; form.hidden = false; });
+
+  // One RSVP per device: once sent, show the confirmation instead of the form
+  function showReceived(name, yes, already) {
+    document.getElementById("result-title").textContent = yes ? "Thank you! See you there." : "Thank you. You'll be missed.";
+    document.getElementById("result-text").textContent = (already ? "We've already received your RSVP" : "Your RSVP has been received") + (name ? ", " + name + "." : ".");
+    form.hidden = true; result.hidden = false;
+  }
+  try {
+    const sent = JSON.parse(localStorage.getItem("rsvp-sent") || "null");
+    if (sent) showReceived(sent.name, sent.yes, true);
+  } catch (_) {}
 })();
 </script>
 </body>
