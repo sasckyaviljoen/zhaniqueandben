@@ -157,6 +157,13 @@ section.block .wrap { padding-block: 5rem; }
 .couple-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .couple-photo .monogram { font-family: var(--font-script); font-size: clamp(3.5rem, 14vw, 5rem); color: var(--panel-ink); opacity: .85; }
 .couple-photo.has-photo .monogram { display: none; }
+.story-body { display: grid; gap: 0; }
+@media (min-width: 900px) {
+  .story-body { grid-template-columns: minmax(0, 22rem) minmax(0, 40rem); justify-content: center; align-items: start; gap: clamp(3rem, 6vw, 5rem); }
+  .story-body .couple-photo { width: 100%; margin: 11px 0 0; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 6rem); }
+  .story-body .story-text { margin: 0; }
+  .story-body .story-text .story-close { text-align: left; }
+}
 .story-text { max-width: 40rem; margin: 0 auto; display: grid; gap: 1.25rem; font-size: 1.05rem; color: var(--muted); }
 .story-text .story-close { font-family: var(--font-display); font-style: italic; font-size: var(--step-1); line-height: 1.5; color: var(--ink); text-align: center; padding-top: 0.75rem; text-wrap: balance; }
 
@@ -390,6 +397,7 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
       <h2>It all began <em>at the gym</em></h2>
       <svg class="flourish" viewBox="0 0 120 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 7 H48 M72 7 H120"/><path d="M60 1 L66 7 L60 13 L54 7 Z"/></svg>
     </div>
+    <div class="story-body">
     <figure class="couple-photo">
       <img src="couple.jpg" alt="Zhanique and Ben" loading="lazy" onload="this.parentElement.classList.add('has-photo')" onerror="this.remove()">
       <span class="monogram" aria-hidden="true" data-initials>Z&amp;B</span>
@@ -399,6 +407,7 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
       <p>As we got to know each other, our individual journeys began to merge into something greater. We found joy in the little things, from our dates and adventures to the quiet moments spent together. We learned that love is not simply about finding someone who makes you happy, but finding someone who understands your drive, supports your ambitions, and chooses to stand beside you through every challenge. We had each been working towards our own goals, but somewhere along the way, our dreams began to align. What was once about becoming the best versions of ourselves individually became about building something bigger together.</p>
       <p>Now, as we prepare to begin this next chapter, we do so with the same determination that brought us together, only with a much greater purpose. We are no longer working towards our dreams separately; we are building a future, a home, and a life that reflects everything we believe in. There will be new goals to chase, adventures to share, challenges to overcome, and countless memories still waiting to be made. And through it all, we will keep doing what brought us here in the first place: showing up, putting in the work, and choosing each other every single day.</p>
       <p class="story-close">We may have met while working on ourselves, but we fell in love with the possibility of everything we could become together.</p>
+    </div>
     </div>
   </div>
 </section>
