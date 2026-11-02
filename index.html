@@ -154,7 +154,7 @@ section.block .wrap { padding-block: 5rem; }
   background: var(--panel); display: grid; place-items: center; overflow: hidden;
   box-shadow: 0 0 0 1px var(--line), 0 0 0 10px var(--surface), 0 0 0 11px var(--line);
 }
-.couple-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.couple-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 58% 35%; }
 .couple-photo .monogram { font-family: var(--font-script); font-size: clamp(3.5rem, 14vw, 5rem); color: var(--panel-ink); opacity: .85; }
 .couple-photo.has-photo .monogram { display: none; }
 .story-body { display: grid; gap: 0; }
@@ -378,7 +378,7 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
       <div><b id="cd-m">0</b><span>Min</span></div>
       <div><b id="cd-s">0</b><span>Sec</span></div>
     </div>
-    <a class="btn" href="#rsvp">RSVP by <span data-rsvp-by>30 November</span></a>
+    <a class="btn" href="#rsvp">RSVP by <span data-rsvp-by>7 December</span></a>
   </div>
 </header>
 
@@ -436,7 +436,7 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
         <h3>Chocolat Bistro</h3>
         <p class="stop-sub">The Birdcage</p>
         <p>46 Oxford Street, Durbanville, Cape Town</p>
-        <p class="stop-note">Doors open at 5:30pm. Please don’t arrive before then.</p>
+        <p class="stop-note">Cocktail hour from 5:30pm until the reception starts at 6pm. Please don’t arrive before 5:30pm.</p>
         <a class="btn ghost" href="https://www.google.com/maps/search/?api=1&amp;query=Chocolat+Bistro+46+Oxford+Street+Durbanville" target="_blank" rel="noopener">Directions</a>
       </article>
     </div>
@@ -515,7 +515,7 @@ html.intro-lock, html.intro-lock body { overflow: hidden; }
     <div class="head">
       <p class="eyebrow">RSVP</p>
       <h2>Will you join us?</h2>
-      <p class="hint">Kindly reply by <span data-rsvp-by>30 November</span>.</p>
+      <p class="hint">Kindly reply by <span data-rsvp-by>7 December</span>.</p>
     </div>
 
     <form class="rsvp" id="rsvp-form" novalidate>
@@ -567,7 +567,7 @@ const WEDDING = {
   partnerOne: "Zhanique",
   partnerTwo: "Ben",
   date: "2027-01-16T16:00:00+02:00", // ceremony time, South African time (SAST, UTC+2)
-  rsvpBy: "30 November"
+  rsvpBy: "7 December"
 };
 
 /* RSVPs are saved to the wedding_rsvps table in Supabase (see wedding/rsvp.sql).
